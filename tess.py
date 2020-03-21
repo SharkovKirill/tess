@@ -5,6 +5,7 @@
 import math
 import turtle
 
+
 def get_color_choice():
     while True:
         colors = ['зеленый', 'красный', 'оранжевый', 'синий', 'бирюзовый', 'малиновый', 'индиго']
@@ -34,6 +35,7 @@ def get_color_choice():
                 return 'indigo'
             break
         print('%s не является верным значением. Пожалуйста повторите попытку.' % color)
+
 
 def get_num_hexagons():
     while True:
@@ -81,8 +83,28 @@ def get_num_hexagons():
 
     pass                        #4-20  return n
 
+
 def draw_hexagon(x, y, side_len, color):
-    pass
+    turtle.goto(x, y)
+    turtle.color(color)
+    turtle.begin_fill()
+    turtle.pendown()
+    turtle.right(30)
+    turtle.forward(side_len)
+    turtle.right(60)
+    turtle.forward(side_len)
+    turtle.right(60)
+    turtle.forward(side_len)
+    turtle.right(60)
+    turtle.forward(side_len)
+    turtle.right(60)
+    turtle.forward(side_len)
+    turtle.right(60)
+    turtle.forward(side_len)
+    turtle.end_fill()
+    turtle.right(60)
+    turtle.penup()
+
 
 def findparametrs(side_len, n):
     parametrs = []
@@ -105,28 +127,31 @@ def findparametrs(side_len, n):
                     parametrs.append([x0, y0])
     return parametrs
 
+
 def find_colors(color1, color2):
+    colors1 = ['green', 'red', 'orange', 'turquoise', 'crimson', 'indigo']
     colors = []
-    #return colors                      #цвета послеовательно расположены в colors
-    pass
+
+    for clr in range(len(colors)):
+        if colors1[clr] == color1 or colors1[clr] == color2:
+            colors.append(colors1[clr])
+
+    return colors
 
 
 def main():
-    #color1 = get_color_choice()
-    #color2 = get_color_choice()
-    #print(color1, color2)
-    get_num_hexagons()
-    n = 4    #пока нету get_num_hexagons()
+    color1 = get_color_choice()
+    color2 = get_color_choice()
+    print(color1, color2)
+    n = int(get_num_hexagons())
     side_len = 500 // ((n + 0.5) * math.sqrt(3))
     params = findparametrs(side_len, n)
-    #print(params)
-    #streamlined_colors = find_colors(color1, color2)
+    streamlined_colors = find_colors(color1, color2)
 
-    #for quantity in range(0, (n * n) + 1):
-    #   draw_hexagon(parametrs[quantity][0], parametrs[quantity][0], side_len, streamlined_colors[quantity])
+    for quantity in range(0, (n * n) + 1):
+       draw_hexagon(params[quantity][0], params[quantity][0], side_len, streamlined_colors[quantity])
 
 main()
-
 
 # TODO:(Sveta) defs: get_num_hexagons()
 # TODO:(Vova) defs: find_colors(color1, color2), draw_hexagon(x, y, side_len, color)(для одного шестиуголльника)
