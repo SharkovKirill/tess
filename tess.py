@@ -4,6 +4,7 @@
 """
 import math
 import turtle
+import time
 
 
 def get_color_choice():
@@ -102,15 +103,15 @@ def draw_hexagon(x, y, side_len, color):
     turtle.right(60)
     turtle.forward(side_len)
     turtle.end_fill()
-    turtle.right(60)
+    turtle.right(30)
     turtle.penup()
 
 
 def findparametrs(side_len, n):
     parametrs = []
-    for vertik in range(1, n +1 ):
+    for vertik in range(1, n + 1):
         if vertik == 1:
-            x0 = math.sqrt(3) * side_len
+            x0 = math.sqrt(3) * side_len/2
             y0 = 0
             parametrs.append([x0, y0])
         for gorizont in range(2, n + 1):
@@ -119,39 +120,44 @@ def findparametrs(side_len, n):
             if gorizont == n and vertik != n:       #[x0,y0] в parametrs - координаты верхних углов всех шестиугольников
                 if vertik % 2 == 1:
                     y0 += 1.5 * side_len
-                    x0 = 0
+                    #x0 = 0
+                    x0 = math.sqrt(3) * side_len
                     parametrs.append([x0, y0])
                 elif vertik % 2 == 0:
-                    x0 = math.sqrt(3) * side_len
+                    #x0 = math.sqrt(3) * side_len
+                    x0 = math.sqrt(3) * side_len/2
                     y0 += 1.5 * side_len
                     parametrs.append([x0, y0])
     return parametrs
 
-
-def find_colors(color1, color2):
-    colors1 = ['green', 'red', 'orange', 'turquoise', 'crimson', 'indigo']
+def find_colors(color1, color2,n):
     colors = []
-
-    for clr in range(len(colors)):
-        if colors1[clr] == color1 or colors1[clr] == color2:
-            colors.append(colors1[clr])
-
+    for i in range(1, (n*n)+1):
+        if (i // (n*2)) % 2 == 0:
+            if i % 2 == 1:
+                colors.append(color1)
+            else:
+                colors.append(color2)
+        else:
+            if i % 2 == 1:
+                colors.append(color2)
+            else:
+                colors.append(color1)
     return colors
-
 
 def main():
     color1 = get_color_choice()
     color2 = get_color_choice()
-    print(color1, color2)
+    color1 = 'green'
+    color2 = 'red'
     n = int(get_num_hexagons())
+    turtle.speed(100)
     side_len = 500 // ((n + 0.5) * math.sqrt(3))
     params = findparametrs(side_len, n)
-    streamlined_colors = find_colors(color1, color2)
+    streamlined_colors = find_colors(color1, color2,n)
 
-    for quantity in range(0, (n * n) + 1):
-       draw_hexagon(params[quantity][0], params[quantity][0], side_len, streamlined_colors[quantity])
+    for quantity in range(0, (n * n) ):
+       draw_hexagon(params[quantity][0], params[quantity][1], side_len, streamlined_colors[quantity])
+    time.sleep(5)
 
 main()
-
-# TODO:(Sveta) defs: get_num_hexagons()
-# TODO:(Vova) defs: find_colors(color1, color2), draw_hexagon(x, y, side_len, color)(для одного шестиуголльника)
